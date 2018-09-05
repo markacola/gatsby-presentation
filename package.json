@@ -1,0 +1,19 @@
+{
+  "name": "gatsby-presentation",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "mdx-deck": "^1.7.1",
+    "mdx-deck-code-surfer": "^0.4.1",
+    "prism-react-renderer": "^0.1.3",
+    "raw-loader": "^0.5.1"
+  },
+  "scripts": {
+    "start": "mdx-deck deck.mdx"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

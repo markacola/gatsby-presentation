@@ -1,0 +1,195 @@
+export { dark as theme } from 'mdx-deck/themes'
+import { CodeSurfer } from 'mdx-deck-code-surfer'
+import vsDark from 'prism-react-renderer/themes/vsDark'
+
+# GatsbyJS
+## Blazing-fast static site generator for React
+---
+# Built with
+- Graphql
+- React
+---
+# Graphql
+You define the shape of the data that you want.
+```graphql
+query User {
+  me {
+    name
+  }
+}
+```
+Could return something like:
+```json
+{
+  "data": {
+    "me": {
+      "name": "Luke Skywalker"
+    }
+  }
+}
+```
+---
+# Graphql
+Queries can have arguments.
+```graphql
+query Human {
+  human(id: 1000) {
+    name
+    height(unit: FOOT)
+  }
+}
+```
+↓
+```json
+{
+  "data": {
+    "human": {
+      "name": "Luke Skywalker",
+      "height": 5.6430448
+    }
+  }
+}
+```
+---
+# Graphql
+You can alias data to control the returned shape even more.
+```graphql
+query HeroName {
+  empireHero: hero(episode: EMPIRE) {
+    name
+  }
+  jediHero: hero(episode: JEDI) {
+    name
+  }
+}
+```
+↓
+```json
+{
+  "data": {
+    "empireHero": {
+      "name": "Luke Skywalker"
+    },
+    "jediHero": {
+      "name": "R2-D2"
+    }
+  }
+}
+```
+---
+# Graphql
+You can have variables to make more general queries.
+```graphql
+query HeroNameAndFriends($id: Int!) {
+  hero(id: $id) {
+    name
+  }
+}
+```
++
+```json
+{
+  "id": 1001
+}
+```
+↓
+```json
+{
+  "data": {
+    "hero": {
+      "name": "R2-D2"
+    }
+  }
+}
+```
+---
+# Graphql
+Heaps more to graphql, recommend checking it out.
+---
+# GatsbyJS
+Two primary files that drive your gatsby site `gatsby-config.js` and `gatsby-node.js`.
+---
+# gatsby-config.js
+This is where you register all your gatsby plugins and basic site data.
+---
+# gatsby-config.js
+Two primary types of plugins:
+- Source (create nodes)
+- Transformer (transform existing nodes)
+---
+# gatsby-config.js
+```javascript
+module.exports = {
+  siteMetadata: {
+    title: 'Some blog'
+  },
+  plugins: [
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        path: `${__dirname}/src/pages`
+      }
+    },
+    {
+      resolve: 'gatsby-transformer-remark',
+      options: {
+        plugins: [
+          {
+            resolve: `gatsby-remark-images`,
+            options: {
+              maxWidth: 590
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
+```
+---
+# gatsby-node.js
+This is where you create the structure of your site.
+---
+<CodeSurfer
+  title="gatsby-node.js"
+  code={require("!raw-loader!./gatsby-node.js")}
+  theme={vsDark}
+  steps={[
+    { lines: [16], notes: "Primary function to build site structure." },
+    { lines: [3], notes: "Called every time a plugin creates a node." },
+    { lines: [6], notes: "We want to add a slug to all our markdown nodes." },
+    { range: [19,31], notes: "Query our graph, getting all our transformed markdown files." },
+    { range: [41,48], notes: "Create a page for each one." }
+  ]}
+/>
+---
+<CodeSurfer
+  title="Example article page"
+  code={require("!raw-loader!./article-example.md")}
+  language="markdown"
+  theme={vsDark}
+  notes="article-example.md"
+/>
+---
+<CodeSurfer
+  title="Example article page"
+  code={require("!raw-loader!./article-example.js")}
+  theme={vsDark}
+  steps={[
+    { lines: [3], notes: "Page component" },
+    { range: [18,32], notes: "Graphql Query for page data" },
+    { tokens: { 3: [10,11,12,13,14,15,16] }, notes: "Destructuring article data from props" },
+    { range: [4, 7], notes: "...further destructuring" },
+    { range: [9, 13], notes: "finally returning element of the article" },
+    { tokens: { 5: [4] }, lines: [11, 22], notes: "title data" },
+    { tokens: { 5: [6], 10:[7] }, range: [23,29], notes: "image data" },
+    { lines: [6, 12, 20], notes: "html data" },
+  ]}
+/>
+---
+## Links
+Basically just the Gatsby site.
+- https://www.gatsbyjs.org/docs/gatsby-starters
+- https://www.gatsbyjs.org/tutorial
+- https://www.gatsbyjs.org/plugins
+---
